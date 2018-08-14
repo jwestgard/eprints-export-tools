@@ -5,7 +5,9 @@ import os
 import requests
 import sys
 
-URI_PATTERN = '''http://health-equity.lib.umd.edu/cgi/export/{0}/DC/minorityhealth-archive-{0}.txt'''
+URI_PATTERN = ('http://health-equity.lib.umd.edu/cgi/export/
+               '{0}/DC/minorityhealth-archive-{0}.txt'
+               )
 OUTPUT_DIR = sys.argv[2]
 
 def fetch_dc_metadata(filepath, uri):
