@@ -74,13 +74,16 @@ class DSpaceSAF():
 
 
 def main():
+    # load lookup dictionary
     lookup = DirLookup(path_dictionary)
+    # For each n, row in enumerate(spreadsheet)
     with open(spreadsheet) as handle:
         reader = csv.DictReader(handle)
-        for row in reader:
-            print(row)
-    # For each n, row in enumerate(spreadsheet)
-    # lookup path using eprint id
+        for n, row in enumerate(reader):
+            # lookup path using eprint id
+            print(n, row)
+            
+
     # create SAF object with metadata dict, 
     #    data path, and outputpath + Item_{n}
     # create contents file
@@ -88,7 +91,9 @@ def main():
     # create revisions zip
     # copy files to SAF
     
-    testobj = DSpaceSAF(file_storage_root, '~/Desktop/test/item_1')
+    testobj = DSpaceSAF(file_storage_root, 
+                        '~/Desktop/test/item_1'
+                        )
     print(testobj.__dict__)
 
 
