@@ -4,8 +4,9 @@ from lxml import etree
 import os
 import sys
 
-path_dictionary = sys.argv[1]
-file_storage_root = sys.argv[2]
+spreadsheet = sys.argv[1]
+path_dictionary = sys.argv[2]
+file_storage_root = sys.argv[3]
 
 class DirLookup(dict):
     '''Class for directory lookup dictionary'''
@@ -56,8 +57,8 @@ class DSpaceSAF():
         with open(self.dc_file, 'w') as handle:
             root = etree.Element("dublin_core")
             for key, value in self.metadata.items():
-                for instance in value.split(" || ")
-                    child = etree.append(etree.Element("dcvalue", element=key)
+                for instance in value.split(" || "):
+                    child = etree.append(etree.Element("dcvalue", element=key))
                     child.text = instance
             etree.write(handle, xml_declaration=True, encoding='UTF-8',
                         pretty_print=True)
@@ -73,9 +74,16 @@ class DSpaceSAF():
 
 
 def main():
+    # load lookup dictionary
     lookup = DirLookup(path_dictionary)
     # For each n, row in enumerate(spreadsheet)
-    # lookup path using eprint id
+    with open(spreadsheet) as handle:
+        reader = csv.DictReader(handle)
+        for n, row in enumerate(reader):
+            # lookup path using eprint id
+            print(n, row)
+            
+
     # create SAF object with metadata dict, 
     #    data path, and outputpath + Item_{n}
     # create contents file
@@ -83,7 +91,9 @@ def main():
     # create revisions zip
     # copy files to SAF
     
-    testobj = DSpaceSAF(file_storage_root, '~/Desktop/test/item_1')
+    testobj = DSpaceSAF(file_storage_root, 
+                        '~/Desktop/test/item_1'
+                        )
     print(testobj.__dict__)
 
 
