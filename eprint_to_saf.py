@@ -68,9 +68,16 @@ class DSpaceSAF():
         serialize it to the file dublin_core.xml'''
         root = etree.Element("dublin_core")
         for key, value in self.metadata.items():
+            element = key.split('.')[1]
+            try:
+                qualifier = key.split('.')[2]
+            except IndexError:
+                qualifier = None
             if value is not None and value != '':
                 for instance in value.split(" || "):
-                    child = etree.Element("dcvalue", element=key)
+                    child = etree.Element("dcvalue", element=element)
+                    if qualifier is not None:
+                        child.set('qualifier', qualifier)
                     child.text = instance
                     root.append(child)
         with open(self.dc_file, 'wb') as handle:
